@@ -89,6 +89,15 @@ AddrSpace::AddrSpace(OpenFile *executable)
 
     DEBUG('a', "Initializing address space, num pages %d, size %d\n",
           numPages, size);
+
+    //check for memory
+    if(((int)numPages) > (memManager->getAvailable())) {
+      printf("ERROR(pre setting up translation): Ran out of Memory!\n");
+
+     // return false; //works after we move this code into addrspace::initialize
+    }
+
+
 // first, set up the translation
     pageTable = new TranslationEntry[numPages];
     for (i = 0; i < numPages; i++) {
@@ -112,7 +121,8 @@ AddrSpace::AddrSpace(OpenFile *executable)
 //Get the pointer to the physical page by mapping the virtual page to the
 //physical page, zero te physical page using the pointer to it.
     for(i = 0; i < numPages; i++) {
-      bzero(&(machine->mainMemory[pageTable[i].physicalPage * PageSize]), PageSize);
+     // bzero(&(machine->mainMemory[pageTable[i].physicalPage * PageSize]), PageSize);
+      memset(&(machine->mainMemory[pageTable[i].physicalPage*PageSize]),0, sizeof(PageSize));
     }
 
 // then, copy in the code and data segments into memory

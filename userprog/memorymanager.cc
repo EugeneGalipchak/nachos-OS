@@ -66,7 +66,7 @@ bool MemoryManager::PageIsAllocated(int physPageNum){
 //   Return the number of clear bits in the bitmap.
 //  (In other words, how many bits are unallocated?) 
 //////////////////////////////////////////////////////////////////////
-int MemoryManager::getAvailable () {
+int MemoryManager::getAvailable() {
   lock->Acquire(); //acquire lock
   
   int tmp = pages->NumClear();
