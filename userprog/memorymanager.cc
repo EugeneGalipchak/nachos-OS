@@ -32,7 +32,7 @@ int MemoryManager::AllocPage () {
     return -1;
 
   usedPagesTotal++;
-      
+
   lock->Release(); //release lock
 
   return free;                   //return found page
@@ -44,14 +44,17 @@ int MemoryManager::AllocPage () {
 //////////////////////////////////////////////////////////////////////
 void MemoryManager::FreePage (int physPageNum) {
   lock->Acquire(); //acquire lock
-      
+
   pages->Clear(physPageNum);
 
   usedPagesTotal--;
-      
+
   lock->Release(); //release lock
 }
 
+//////////////////////////////////////////////////////////////////////
+//   Boolean that returns whether or not the page is allocated.
+//////////////////////////////////////////////////////////////////////
 bool MemoryManager::PageIsAllocated(int physPageNum){
   lock->Acquire(); //acquire lock
 
@@ -68,9 +71,9 @@ bool MemoryManager::PageIsAllocated(int physPageNum){
 //////////////////////////////////////////////////////////////////////
 int MemoryManager::getAvailable() {
   lock->Acquire(); //acquire lock
-  
+
   int tmp = pages->NumClear();
-  
+
   lock->Release(); //release lock
   return tmp;    
 }

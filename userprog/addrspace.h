@@ -17,26 +17,29 @@
 #include "filesys.h"
 //#include "memorymanager.h"
 
-#define UserStackSize		1024 	// increase this as necessary!
+#define UserStackSize		1024 	        // increase this as necessary!
 
 class AddrSpace {
-public:
+  public:
     AddrSpace(OpenFile *executable);	// Create an address space,
+    bool Initialize(OpenFile *executable);
     // initializing it with the program
     // stored in the file "executable"
-    ~AddrSpace();			// De-allocate an address space
+    ~AddrSpace();			                // De-allocate an address space
 
-    void InitRegisters();		// Initialize user-level CPU registers,
+    void InitRegisters();		          // Initialize user-level CPU registers,
     // before jumping to user code
 
-    void SaveState();			// Save/restore address space-specific
-    void RestoreState();		// info on a context switch
+    int Read(int i);                  // returns translation of virt address
+
+    void SaveState();			            // Save/restore address space-specific
+    void RestoreState();		          // info on a context switch
 
     //extern MemoryManager *memManager;
-private:
-    TranslationEntry *pageTable;	// Assume linear page table translation
+  private:
+    TranslationEntry *pageTable;	    // Assume linear page table translation
     // for now!
-    unsigned int numPages;		// Number of pages in the virtual
+    unsigned int numPages;		        // Number of pages in the virtual
     // address space
 };
 
