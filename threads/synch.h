@@ -20,7 +20,7 @@
 #include "copyright.h"
 #include "thread.h"
 #include "list.h"
-#include "system.h"
+//#include "system.h"
 
 // The following class defines a "semaphore" whose value is a non-negative
 // integer.  The semaphore has only two operations P() and V():
@@ -140,7 +140,7 @@ private:
     // plus some other stuff you'll need to define
     List *queue; 
     Thread * myThread;
-    Scheduler *myScheduler;
+    //Scheduler *myScheduler;
 };
 
 
