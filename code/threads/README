@@ -1,0 +1,92 @@
+TEAM MEMBERS:
+  Anh Dang
+  Duy Le
+  Shirley Quach
+  Yevgeniy Galipchak
+
+QUESTIONS TO ANSWER(EACH PART):
+  1. Changes we made.
+  2. How well they worked.
+  3. How we tested it.
+
+PART 1:
+  The main method that we used in order to implement the locks general
+  functions, acquire and release was to use the similar structure that of
+  the semaphores. The idea is that both were the same(assuming that the count
+  for semaphores was always between 0 and 1, in which it then behaves just
+  like a lock. So the simplementation was straight forward for it. Since
+  we are guarenteed a lock if the semaphore retains its basic attributes,
+  then we know it worked well. This was also reinforced through the testing
+  that we did on them. The method we used to implement the conditions was
+  similar, except we essentially used pseudo code from the slides and various
+  online websites in order to get a good idea of what we needed to do to
+  implement it corrently. The method we used to test it was to follow the
+  minimum testing outline listed in the assignment. We placed ASSERT
+  statements in order to catch errors that may end up happening, or will be
+  thrown if it is treated incorrectly.
+
+PART 2:
+  For mailbox, we had to utilize our implementations of both locks and
+  conditions in order to make it work. This portion of the assignment took
+  quite a long time in order to understand how to implement corrently. The
+  slides helped my realization with this portion of the assignment. We
+  essentially did our best to satisfy the properties of a mailbox with the
+  use of locks and conditions, but once all the proper checks were made, the
+  implementation was sraight forward. From the various testing that we did, it
+  looks as if we have made it work well. The testing that we followed was 
+  the listed requirements in the assignment, along with chaos testing which
+  essentially just sent and received a multitide of things to make sure that
+  it still behaves correctly.
+
+PART 3:
+  For this part, we made some changes in the finish() method, and wrote a new 
+  method called Join(). Both are done in thread.cc (with declarations made in thread.h).
+  For Join() method, first we created a Condition variable called “joinCon”, a lock 
+  called “joinLock”, a Boolean called “joinAlreadyCalled” and a flag called “go”. 
+  First, we need to acquire the lock. Then we set flag “go” to 1. Then we need to 
+  make sure that join was not called on this thread before, meaning it is the joiner. 
+  Then we make sure that the thread is not calling join on itself. Once that happens, 
+  we set joinAlreadyCalled to be true to show that join was already called on this thread. 
+  Then we will call signal on the lock, call wait on the lock, and call signal on the 
+  lock again. After all that is done, we can release the lock.
+
+  For the finish() method, we need to separate it into 2 cases: join is called on 
+  this thread and join is not called on this thread. We  made corresponding changes 
+  based on each scenario.
+
+PART 4:
+  For this part, we made some changes in thead.cc and synch.cc (with declarations in thread.h 
+  and synch.h). 
+  In thread.cc, we created a setter and a getter method called setPririty(int newPriority) 
+  and int getPriority(). The idea is that once a thread can be added to the ready list, 
+  it should be added into the list based on its priority (which will be called by the 
+  getter and setter methods). Getter method basically gets the priority of the thread, 
+  and setting basically sets the priority of the thread.
+
+  Then in synch.cc, we need to modify Lock Acquire and Condition Wait. Instead of 
+  appending to the queue as before, we need to insert them in the order of priority 
+  by calling the sortedInsert method. SortedInsert takes in 2 parameters: first one is the currentThread, and the second one is (-1) times the priority of the currentThread.
+
+PART 5:
+  Part 5 was very similar to how we implemented part 2. The only differences
+  here was that there was three "mailboxes" and they all needed each other in
+  order to return. Also they were simply just calling eachother rather than
+  passing a messge with a buffer. In many way this program was easier than 2,
+  because it just required everything from problem 2 with a little more. It
+  worked well and we verified this through the testing, which was VERY similar
+  so that of mailbox, except with three objects trying to call eachother.
+
+
+
+HOW EACH MEMBER PARTICIPATED:
+  Each team member pulled their own weight in the project, and we all worked
+  together in order to finish all of the parts and testing that was required.
+
+  Anh Dang - Focused on part 3 and tester
+
+  Duy Le - Focused on part 3 and tester
+
+  Shirley Quach - Focused on part 4 and tester 
+
+  Yevgeniy Galipchak - Worked on nearly all parts and testers.
+
